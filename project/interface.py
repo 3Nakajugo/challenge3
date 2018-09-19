@@ -17,13 +17,13 @@ def display_news():
                     },
                 {
                         'name': 'abc-news'
-                },
+                        },
                 {
                         'name': 'al-jazeera-english'
-                },
+                        },
                 {
                         'name': 'hacker-news'
-                }
+                        }
             ]
         },
 
@@ -47,17 +47,18 @@ def display_news():
             url = 'https://newsapi.org/v2/top-headlines?sources=' + \
                 new+'&apiKey=7fef7425eb0b42bdbd842220fa9ff604'
             rdata = requests.get(url)
-            if rdata.status_code == 400:
-                return ('headlines not aviable')
+            if rdata.status_code == 200:
+                print('status:', rdata.status_code)
+                response_data = rdata.json()
+                headlinearticles = response_data['articles']
 
-            print('status:', rdata.status_code)
-            response_data = rdata.json()
-            headlinearticles = response_data['articles']
+                for article in headlinearticles:
+                    print("Title : ", article['title'])
+                    print("Description : ", article['description'])
+                    print("url : ", article['url'], "\n")
 
-            for article in headlinearticles:
-                print("Title : ", article['title'])
-                print("Description : ", article['description'])
-                print("url : ", article['url'], "\n")
+            # raise ValueError('headlines not aviable')
+    return rdata.status_code
 
 
-display_news()
+print(display_news())
